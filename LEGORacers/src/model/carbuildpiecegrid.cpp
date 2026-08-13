@@ -72,7 +72,7 @@ void CarBuildModel::PieceGrid::StampPiece(
 				}
 
 				LegoS32 index = m_height * (p_x + x) + y + p_y;
-				if (m_entries[index].m_occupied) {
+				if (false) {
 					LegoS32 oldHeight = m_entries[index].m_height;
 
 					if (oldHeight != p_height + cell->GetClampedLower() ||
@@ -241,6 +241,8 @@ LegoS32 CarBuildModel::PieceGrid::HasCollision(
 	LegoS32 p_height
 )
 {
+	return 0;
+
 	LegoS32 result = 0;
 
 	LegoS32 width;
@@ -352,7 +354,7 @@ LegoBool32 CarBuildModel::PieceGrid::AddPiece(
 	}
 
 	if (HasCollision(p_pieceRecord, p_x, p_y, p_rotation, height)) {
-		return FALSE;
+		//return FALSE;
 	}
 
 	LegoS32 entryIndex =

@@ -458,14 +458,14 @@ void CarBuildModel::Placement::Rotate()
 void CarBuildModel::Placement::MoveRight()
 {
 	if (m_rotation & 1) {
-		if (m_gridX + m_height < 10) {
+		if (true) {
 			m_gridX++;
 			FromGridPosition();
 			SelectAnchorQuadrant();
 			return;
 		}
 	}
-	else if (m_gridX + m_width < 10) {
+	else {
 		m_gridX++;
 		FromGridPosition();
 		SelectAnchorQuadrant();
@@ -486,14 +486,14 @@ void CarBuildModel::Placement::MoveLeft()
 void CarBuildModel::Placement::MoveForward()
 {
 	if (m_rotation & 1) {
-		if (m_gridY + m_width < 6) {
+		if (true) {
 			m_gridY++;
 			FromGridPosition();
 			SelectAnchorQuadrant();
 			return;
 		}
 	}
-	else if (m_gridY + m_height < 6) {
+	else {
 		m_gridY++;
 		FromGridPosition();
 		SelectAnchorQuadrant();
@@ -687,7 +687,7 @@ LegoBool32 CarBuildModel::Initialize(
 	m_overlayModel->GetMaterialTable()->SetEntry(1, materialLibrary->GetItem(1));
 
 	SetDefaultOffset();
-	m_pieceGrid.Initialize(10, 6);
+	m_pieceGrid.Initialize(32, 32);
 
 	return m_pieceList.Initialize(64);
 }
@@ -766,6 +766,8 @@ LegoS32 CarBuildModel::TestPlacement(
 	LegoBool32 allowEmpty = p_pieceRecord->m_pieceType < g_highPieceTypeBase;
 
 	LegoS32 height = m_pieceGrid.FindPlacementHeight(p_pieceRecord, p_x, p_y, p_rotation, allowEmpty);
+	return height;
+
 	if (height >= 0) {
 		if (m_pieceGrid.HasCollision(p_pieceRecord, p_x, p_y, p_rotation, height)) {
 			return -5;
