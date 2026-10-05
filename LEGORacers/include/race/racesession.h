@@ -116,7 +116,7 @@ private:
 		c_updateStepMs = 40,
 		c_overlayStringId = 0x2e,
 		c_overlayDrawDelayMs = 250,
-		c_overlayBottomPadding = 5,
+		c_overlayBottomPadding = 128,
 		c_demoTextCycleMs = 1000,
 		c_abortKeyQ = 1 << 0,
 		c_abortKeyControl = 1 << 1,

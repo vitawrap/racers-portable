@@ -57,7 +57,7 @@ LegoRacers::LegoRacers()
 	m_context.m_cameraFarClip = g_defaultCameraFarClip;
 	m_context.m_raceMode = Context::c_raceModeSingle;
 	m_context.m_playerCount = 1;
-	m_context.m_nextMenuId = c_menuLegal;
+	m_context.m_nextMenuId = c_menuMainMenu;
 	m_context.m_cameraViewIndex = 0;
 	m_context.m_raceSlots[0].m_enabled = 1;
 	strncpy(m_context.m_raceSlots[0].m_raceName, "racec0r0", sizeof(m_context.m_raceSlots[0].m_raceName));
@@ -107,13 +107,13 @@ void LegoRacers::Run()
 
 	GolAppEventHandler::OnCloseRequested();
 
-	if (m_cutscenes) {
-		VideoPlayer::Begin(&m_golApp, 640, 480);
-		VideoPlayer::Play(&m_golApp, "lmicmp.avi", FALSE, FALSE);
-		VideoPlayer::Play(&m_golApp, "hvscmp.avi", TRUE, FALSE);
-		VideoPlayer::Play(&m_golApp, "introcmp.avi", TRUE, FALSE);
-		VideoPlayer::End(&m_golApp);
-	}
+	// if (m_cutscenes) {
+	// 	VideoPlayer::Begin(&m_golApp, 640, 480);
+	// 	VideoPlayer::Play(&m_golApp, "lmicmp.avi", FALSE, FALSE);
+	// 	VideoPlayer::Play(&m_golApp, "hvscmp.avi", TRUE, FALSE);
+	// 	VideoPlayer::Play(&m_golApp, "introcmp.avi", TRUE, FALSE);
+	// 	VideoPlayer::End(&m_golApp);
+	// }
 
 	InitializeDisplayAndSound();
 

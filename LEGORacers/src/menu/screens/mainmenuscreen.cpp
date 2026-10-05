@@ -28,7 +28,7 @@ MainMenuScreen::~MainMenuScreen()
 // FUNCTION: LEGORACERS 0x00480e10
 void MainMenuScreen::Reset()
 {
-	m_idleTimeoutMs = 60000;
+	m_idleTimeoutMs = 0;
 	m_idleAnimTimerMs = 30000;
 	m_cheatKeyMask = 0;
 	m_driverEntity = NULL;
@@ -71,20 +71,20 @@ void MainMenuScreen::CreateDriverScene()
 // FUNCTION: LEGORACERS 0x00480f20
 void MainMenuScreen::CreateWidgets()
 {
-	CreateImage(&m_photoImage, 0x49, 0x49);
-	CreateImage(&m_logoImage, 0x52, 0x52);
+	//CreateImage(&m_photoImage, 0x49, 0x49);
+	//CreateImage(&m_logoImage, 0x52, 0x52);
 	CreateDriverScene();
-	CreateTextButton(&m_garageButton, 3, 0x42, 0x25);
-	CreateTextButton(&m_circuitRaceButton, 0x55, 0x42, 0x21);
-	CreateTextButton(&m_singleRaceButton, 0x56, 0x42, 0x22);
-	CreateTextButton(&m_versusRaceButton, 0x57, 0x42, 0x23);
-	CreateTextButton(&m_timeRaceButton, 0x58, 0x42, 0x24);
-	CreateTextButton(&m_optionsButton, 8, 0x42, 0x26);
-	CreateTextButton(&m_exitButton, 0x59, 0x42, 0x27);
+	// CreateTextButton(&m_garageButton, 3, 0x42, 0x25);
+	// CreateTextButton(&m_circuitRaceButton, 0x55, 0x42, 0x21);
+	// CreateTextButton(&m_singleRaceButton, 0x56, 0x42, 0x22);
+	// CreateTextButton(&m_versusRaceButton, 0x57, 0x42, 0x23);
+	// CreateTextButton(&m_timeRaceButton, 0x58, 0x42, 0x24);
+	// CreateTextButton(&m_optionsButton, 8, 0x42, 0x26);
+	// CreateTextButton(&m_exitButton, 0x59, 0x42, 0x27);
 
-	if (!m_inputManager->GetJoystickCount()) {
-		m_versusRaceButton.Disable(5);
-	}
+	// if (!m_inputManager->GetJoystickCount()) {
+	// 	m_versusRaceButton.Disable(5);
+	// }
 }
 
 // FUNCTION: LEGORACERS 0x00481000
@@ -98,9 +98,9 @@ LegoBool32 MainMenuScreen::Initialize(MenuGameContext* p_context, MenuScreenCrea
 		LoadPieceResources(p_context, TRUE);
 	}
 
-	if (!MenuGameScreen::IsMenuMusicPlaying(p_context)) {
-		StartMenuMusic(p_context, 0, TRUE);
-	}
+	// if (!MenuGameScreen::IsMenuMusicPlaying(p_context)) {
+	// 	StartMenuMusic(p_context, 0, TRUE);
+	// }
 
 	if (!MenuGameScreen::Initialize(p_context, p_createParams)) {
 		return FALSE;
@@ -116,8 +116,8 @@ LegoBool32 MainMenuScreen::Initialize(MenuGameContext* p_context, MenuScreenCrea
 	m_driverEntity->SetFlags(m_driverEntity->GetFlags() | 0x10000);
 	m_driverEntity->SetFlags(m_driverEntity->GetFlags() & ~0x40000);
 	p_context->m_saveSystem.GetActiveRecord().Reset();
-	m_garageButton.Select(5);
-	m_cursor->SetCursorEnabled(TRUE);
+	//m_garageButton.Select(5);
+	m_cursor->SetCursorEnabled(FALSE);
 	return TRUE;
 }
 
@@ -135,46 +135,46 @@ LegoBool32 MainMenuScreen::Destroy()
 // FUNCTION: LEGORACERS 0x00481150
 void MainMenuScreen::OnIconUnfocused(MenuWidget* p_source)
 {
-	if (p_source == &m_circuitRaceButton) {
-		m_nextMenuId = 5;
-		m_context->m_modelBuilder.SetMenuFlowFlags(
-			m_context->m_modelBuilder.GetMenuFlowFlags() & ~DriverModelBuilder::c_menuFlowVersus
-		);
-	}
-	else if (p_source == &m_singleRaceButton) {
-		m_nextMenuId = 6;
-		m_context->m_modelBuilder.SetMenuFlowFlags(
-			m_context->m_modelBuilder.GetMenuFlowFlags() & ~DriverModelBuilder::c_menuFlowVersus
-		);
-	}
-	else if (p_source == &m_versusRaceButton) {
-		m_nextMenuId = 6;
-		m_context->m_modelBuilder.SetMenuFlowFlags(
-			m_context->m_modelBuilder.GetMenuFlowFlags() | DriverModelBuilder::c_menuFlowVersus
-		);
-	}
-	else if (p_source == &m_timeRaceButton) {
-		m_nextMenuId = 0x1d;
-	}
-	else if (p_source == &m_garageButton) {
-		m_nextMenuId = 3;
-		MenuGameScreen::StopMenuMusic(m_context);
-	}
-	else if (p_source == &m_optionsButton) {
-		m_nextMenuId = 8;
-	}
-	else if (p_source == &m_exitButton) {
-		CreateTextButton(&m_confirmYesButton, 0x99, 0x46, 0x73);
-		CreateTextButton(&m_confirmNoButton, 0x99, 0x45, 0x74);
-		ShowConfirmDialog(&m_confirmYesButton, &m_confirmNoButton, 0x75);
-	}
-	else if (p_source == &m_confirmYesButton) {
-		m_dialog->DismissTop();
-		m_nextMenuId = 0;
-	}
-	else if (p_source == &m_confirmNoButton || p_source == &m_noticePopup) {
-		m_dialog->DismissTop();
-	}
+	// if (p_source == &m_circuitRaceButton) {
+	// 	m_nextMenuId = 5;
+	// 	m_context->m_modelBuilder.SetMenuFlowFlags(
+	// 		m_context->m_modelBuilder.GetMenuFlowFlags() & ~DriverModelBuilder::c_menuFlowVersus
+	// 	);
+	// }
+	// else if (p_source == &m_singleRaceButton) {
+	// 	m_nextMenuId = 6;
+	// 	m_context->m_modelBuilder.SetMenuFlowFlags(
+	// 		m_context->m_modelBuilder.GetMenuFlowFlags() & ~DriverModelBuilder::c_menuFlowVersus
+	// 	);
+	// }
+	// else if (p_source == &m_versusRaceButton) {
+	// 	m_nextMenuId = 6;
+	// 	m_context->m_modelBuilder.SetMenuFlowFlags(
+	// 		m_context->m_modelBuilder.GetMenuFlowFlags() | DriverModelBuilder::c_menuFlowVersus
+	// 	);
+	// }
+	// else if (p_source == &m_timeRaceButton) {
+	// 	m_nextMenuId = 0x1d;
+	// }
+	// else if (p_source == &m_garageButton) {
+	// 	m_nextMenuId = 3;
+	// 	MenuGameScreen::StopMenuMusic(m_context);
+	// }
+	// else if (p_source == &m_optionsButton) {
+	// 	m_nextMenuId = 8;
+	// }
+	// else if (p_source == &m_exitButton) {
+	// 	CreateTextButton(&m_confirmYesButton, 0x99, 0x46, 0x73);
+	// 	CreateTextButton(&m_confirmNoButton, 0x99, 0x45, 0x74);
+	// 	ShowConfirmDialog(&m_confirmYesButton, &m_confirmNoButton, 0x75);
+	// }
+	// else if (p_source == &m_confirmYesButton) {
+	// 	m_dialog->DismissTop();
+	// 	m_nextMenuId = 0;
+	// }
+	// else if (p_source == &m_confirmNoButton || p_source == &m_noticePopup) {
+	// 	m_dialog->DismissTop();
+	// }
 
 	if (m_nextMenuId != 0xffff) {
 		m_clickedWidget = p_source;

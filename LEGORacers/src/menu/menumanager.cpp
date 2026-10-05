@@ -719,8 +719,10 @@ void MenuManager::PrepareRaceContext()
 		context->m_raceMode = LegoRacers::Context::c_raceModeSingle;
 
 		g_randomTableIndex = (g_randomTableIndex + 1) & 0x3ff;
-		RaceNameEntry* raceName =
-			m_gameContext.m_circuitList.GetEntries()[0].GetRaceNameEntry(g_randomTable[g_randomTableIndex] % 4);
+		auto const& def = m_gameContext.m_circuitList.GetEntries()[g_randomTable[g_randomTableIndex] % 5];
+		g_randomTableIndex = (g_randomTableIndex + 1) & 0x3ff;
+		LegoU32 raceIdx = g_randomTable[g_randomTableIndex] % 4;
+		RaceNameEntry* raceName = def.GetRaceNameEntry(raceIdx == 4? 0 : g_randomTable[g_randomTableIndex] % 4);
 
 		if (raceName) {
 			::memcpy(

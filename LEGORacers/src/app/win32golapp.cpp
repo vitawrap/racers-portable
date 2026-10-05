@@ -554,34 +554,34 @@ LegoS32 Win32GolApp::Tick(GolAppEventHandler* p_eventHandler)
 					}
 				}
 				break;
-			case SDL_EVENT_WINDOW_FOCUS_LOST:
-				// WM_ACTIVATEAPP(FALSE) equivalent.
-				if ((m_flags & c_flagDisplayActive) && !m_disabled) {
-					OutputDebugString("Deactivate App\n");
-					OnAppDeactivated();
-					if (m_eventHandler) {
-						m_eventHandler->OnAppDeactivated();
-					}
-					m_disabled = TRUE;
-					m_pollInput = 0;
-					m_inputManager.SuspendActiveDevices();
-					MiniwinSound_SetSuspended(true);
-				}
-				break;
-			case SDL_EVENT_WINDOW_FOCUS_GAINED:
-				// WM_ACTIVATEAPP(TRUE) / WM_SIZE(SIZE_RESTORED) equivalent.
-				if ((m_flags & c_flagDisplayActive) && m_disabled) {
-					OutputDebugString("Activate App\n");
-					OnAppActivated();
-					m_disabled = FALSE;
-					m_pollInput = 1;
-					m_inputManager.RestoreSuspendedDevices();
-					MiniwinSound_SetSuspended(false);
-					if (m_eventHandler) {
-						m_eventHandler->OnAppActivated();
-					}
-				}
-				break;
+			// case SDL_EVENT_WINDOW_FOCUS_LOST:
+			// 	// WM_ACTIVATEAPP(FALSE) equivalent.
+			// 	if ((m_flags & c_flagDisplayActive) && !m_disabled) {
+			// 		OutputDebugString("Deactivate App\n");
+			// 		OnAppDeactivated();
+			// 		if (m_eventHandler) {
+			// 			m_eventHandler->OnAppDeactivated();
+			// 		}
+			// 		m_disabled = TRUE;
+			// 		m_pollInput = 0;
+			// 		m_inputManager.SuspendActiveDevices();
+			// 		MiniwinSound_SetSuspended(true);
+			// 	}
+			// 	break;
+			// case SDL_EVENT_WINDOW_FOCUS_GAINED:
+			// 	// WM_ACTIVATEAPP(TRUE) / WM_SIZE(SIZE_RESTORED) equivalent.
+			// 	if ((m_flags & c_flagDisplayActive) && m_disabled) {
+			// 		OutputDebugString("Activate App\n");
+			// 		OnAppActivated();
+			// 		m_disabled = FALSE;
+			// 		m_pollInput = 1;
+			// 		m_inputManager.RestoreSuspendedDevices();
+			// 		MiniwinSound_SetSuspended(false);
+			// 		if (m_eventHandler) {
+			// 			m_eventHandler->OnAppActivated();
+			// 		}
+			// 	}
+			// 	break;
 			default:
 				break;
 			}

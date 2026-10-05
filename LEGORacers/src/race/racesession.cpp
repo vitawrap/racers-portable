@@ -1808,40 +1808,41 @@ void RaceSession::UpdateCountdownState()
 	if (m_music) {
 		m_music->Stop();
 		m_musicGroup->DestroyMusicInstance(m_music);
+		m_music = NULL;
 
-		LegoU32 musicIndex = 1;
-		MusicGroup* musicGroup = m_musicGroup;
-		if (musicGroup->GetMusicCount() > 4 && !m_standings) {
-			LegoU32 randomValue = 0;
-			LegoU32 randomState = g_randomTableIndex;
-			g_randomTableIndex = (randomState + 1) & 0x3ff;
-			musicGroup = m_musicGroup;
-			randomValue = g_randomTable[g_randomTableIndex];
-			LegoU32 randomIndex = randomValue % (musicGroup->GetMusicCount() - 3);
-			switch (randomIndex) {
-			case 0:
-				musicIndex = 1;
-				break;
-			case 1:
-				musicIndex = 4;
-				break;
-			case 2:
-				musicIndex = 5;
-				break;
-			case 3:
-				musicIndex = 6;
-				break;
-			default:
-				musicIndex = 1;
-				break;
-			}
-		}
+		// LegoU32 musicIndex = 1;
+		// MusicGroup* musicGroup = m_musicGroup;
+		// if (musicGroup->GetMusicCount() > 4 && !m_standings) {
+		// 	LegoU32 randomValue = 0;
+		// 	LegoU32 randomState = g_randomTableIndex;
+		// 	g_randomTableIndex = (randomState + 1) & 0x3ff;
+		// 	musicGroup = m_musicGroup;
+		// 	randomValue = g_randomTable[g_randomTableIndex];
+		// 	LegoU32 randomIndex = randomValue % (musicGroup->GetMusicCount() - 3);
+		// 	switch (randomIndex) {
+		// 	case 0:
+		// 		musicIndex = 1;
+		// 		break;
+		// 	case 1:
+		// 		musicIndex = 4;
+		// 		break;
+		// 	case 2:
+		// 		musicIndex = 5;
+		// 		break;
+		// 	case 3:
+		// 		musicIndex = 6;
+		// 		break;
+		// 	default:
+		// 		musicIndex = 1;
+		// 		break;
+		// 	}
+		// }
 
-		m_music = m_musicGroup->CreateMusicInstance(musicIndex);
-		if (m_music) {
-			m_music->SetVolume(m_musicVolume);
-			m_music->Play(TRUE);
-		}
+		// m_music = m_musicGroup->CreateMusicInstance(musicIndex);
+		// if (m_music) {
+		// 	m_music->SetVolume(m_musicVolume);
+		// 	m_music->Play(TRUE);
+		// }
 	}
 
 	m_finishedCount = 0;
@@ -2398,22 +2399,48 @@ void RaceSession::DrawHuds()
 // FUNCTION: LEGORACERS 0x00435ab0
 void RaceSession::DrawDemoText()
 {
-	if (m_demoMode && m_demoTextMs > c_overlayDrawDelayMs) {
-		GolString string;
-		const GolRenderTarget* renderTargetInfo = m_renderer->GetRenderTargetInfo();
-		string.CopyFromBufSelection(m_stringTable.GetStringBuffer(c_overlayStringId), 0);
+	static LegoU32 wobbleTimer = 0;
+	wobbleTimer += m_golApp->GetFrameDeltaMs();
 
-		LegoS32 textWidth;
-		LegoS32 textHeight;
+	GolString string;
+	const GolRenderTarget* renderTargetInfo = m_renderer->GetRenderTargetInfo();
+	LegoS32 textWidth;
+	LegoS32 textHeight;
+	
+	string.CopyFromBufSelection((unsigned short*) u"STREAM OFFLINE", 0);
+	m_loadingFont->MeasureString(&string, &textWidth, &textHeight);
+	m_loadingFont->SetColor(0xff, 0xff, 0x0, 0xff);
+
+	LegoFloat s, c;
+	GolMath::SinCos((LegoFloat)wobbleTimer * 0.003, &s, &c);
+	s = s < 0? s * -1.f : s;
+
+	LegoFloat centerScale = 1.2f + (s * 0.5f);
+
+	m_renderer->DrawString(
+		&string,
+		m_loadingFont,
+		(renderTargetInfo->GetWidthU32() >> 1) - (static_cast<LegoU32>((LegoFloat)textWidth * centerScale) >> 1),
+		c_overlayBottomPadding + textHeight,
+		centerScale,
+		centerScale,
+		NULL,
+		0
+	);
+
+	m_loadingFont->SetColor(0xff, 0xff, 0xff, 0xff);
+	if (m_demoMode && m_demoTextMs > c_overlayDrawDelayMs) {
+		// bottom text
+		string.CopyFromBufSelection((unsigned short*) u"CLICK TO CYCLE TRACKS", 0);
 		m_loadingFont->MeasureString(&string, &textWidth, &textHeight);
 
 		m_renderer->DrawString(
 			&string,
 			m_loadingFont,
 			(renderTargetInfo->GetWidthU32() >> 1) - (static_cast<LegoU32>(textWidth) >> 1),
-			renderTargetInfo->GetHeightU32() - textHeight - c_overlayBottomPadding,
-			1.0f,
-			1.0f,
+			renderTargetInfo->GetHeightU32() - textHeight - 4,
+			1.f,
+			1.f,
 			NULL,
 			0
 		);

@@ -153,6 +153,8 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
 	// LegoRacers::ParseArguments untouched.
 	bool rendererFromCli = false;
 	g_commandLine[0] = '\0';
+	MiniwinSetRenderResolution(MINIWIN_RESOLUTION_NATIVE);
+	MiniwinSetScaleMode(MINIWIN_SCALE_STRETCH);
 	for (int i = 1; i < argc; i++) {
 		if (SDL_strcmp(argv[i], "--help") == 0) {
 			DisplayArgumentHelp();
@@ -160,26 +162,6 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char** argv)
 		}
 		if (SDL_strcmp(argv[i], "--language") == 0 && i + 1 < argc) {
 			MiniwinSetRegistryLangId((DWORD) SDL_atoi(argv[i + 1]));
-			i++;
-			continue;
-		}
-		if (SDL_strcmp(argv[i], "--resolution") == 0 && i + 1 < argc) {
-			if (SDL_strcmp(argv[i + 1], "original") == 0) {
-				MiniwinSetRenderResolution(MINIWIN_RESOLUTION_ORIGINAL);
-			}
-			else {
-				MiniwinSetRenderResolution(MINIWIN_RESOLUTION_NATIVE);
-			}
-			i++;
-			continue;
-		}
-		if (SDL_strcmp(argv[i], "--scale") == 0 && i + 1 < argc) {
-			if (SDL_strcmp(argv[i + 1], "stretch") == 0) {
-				MiniwinSetScaleMode(MINIWIN_SCALE_STRETCH);
-			}
-			else {
-				MiniwinSetScaleMode(MINIWIN_SCALE_LETTERBOX);
-			}
 			i++;
 			continue;
 		}

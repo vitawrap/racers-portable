@@ -237,8 +237,8 @@ void GameState::LoadFromSaveGame(SaveGame* p_saveGame, LegoU32 p_activeSaveIndex
 	m_state.m_displayDriverGuid = state.m_displayDriverGuid;
 	m_state.m_unk0x1d = state.m_unk0x1d;
 	m_state.m_unk0x1e = state.m_unk0x1e;
-	m_state.m_musicVolume = state.m_musicVolume;
-	m_state.m_soundVolume = state.m_soundVolume;
+	m_state.m_musicVolume = 0x4f;
+	m_state.m_soundVolume = 0x4f;
 	m_state.m_stereo = state.m_stereo;
 	m_state.m_languageIndex = state.m_languageIndex;
 	m_state.m_lapCount = state.m_lapCount;
